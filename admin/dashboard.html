@@ -10,6 +10,11 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <meta
+        name="theme-color"
+        content="#06285f"
+    >
+
     <title>
         Management Dashboard | Select Overseas
     </title>
@@ -22,278 +27,198 @@
 </head>
 
 
-<body class="dashboard-page">
+<body class="admin-page">
 
 
-    <!-- =========================================
-         SIDEBAR
-    ========================================== -->
+    <!-- =====================================================
+         MANAGEMENT HEADER
+    ====================================================== -->
 
-    <aside class="sidebar">
+    <header class="admin-header">
+
 
         <!-- LOGO -->
 
-        <div class="sidebar-logo">
+        <div class="admin-brand">
 
-            <img src="../assets/select-logo-11.jpg" class="sidebar-logo" alt="Select Overseas">
+            <a
+                href="../index.html"
+                class="admin-logo-link"
+            >
 
-        </div>
+                <img
+                    src="../assets/select-overseas-logo.png"
+                    alt="Select Overseas"
+                    class="admin-logo"
+                >
+
+            </a>
 
 
-        <!-- PORTAL TITLE -->
-
-        <div class="portal-title">
-
-            <span>
-                MANAGEMENT PORTAL
+            <span class="admin-brand-text">
+                Management Portal
             </span>
 
-            <h2>
-                Dashboard
-            </h2>
-
         </div>
 
 
-        <!-- SIDEBAR NAVIGATION -->
+        <!-- ADMIN INFORMATION -->
 
-        <nav class="sidebar-nav">
+        <div class="admin-header-right">
 
-            <!-- DASHBOARD -->
+            <span
+                id="adminEmail"
+                class="admin-email"
+            ></span>
+
 
             <button
+                id="logoutBtn"
+                class="logout"
                 type="button"
-                class="nav-link active"
-                id="dashboardNav"
-            >
-                📊 Dashboard
-            </button>
-
-
-            <!-- CLIENT LEADS -->
-
-            <button
-                type="button"
-                class="nav-link"
-                id="clientLeadsNav"
-            >
-                👥 Client Leads
-            </button>
-
-
-            <!-- NEW LEADS -->
-
-            <button
-                type="button"
-                class="nav-link"
-                id="newLeadsNav"
-            >
-                🆕 New Leads
-            </button>
-
-        </nav>
-
-</button>
-        <!-- SIDEBAR BOTTOM -->
-
-        <div class="sidebar-bottom">
-
-            <button
-                type="button"
-                id="logoutButton"
-                class="logout-button"
             >
                 Logout
             </button>
 
         </div>
 
-    </aside>
+
+    </header>
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          MAIN CONTENT
-    ========================================== -->
+    ====================================================== -->
 
-    <main class="dashboard-main">
-
-
-        <!-- =========================================
-             HEADER
-        ========================================== -->
-
-        <header class="dashboard-header">
-
-            <div>
-
-                <p class="header-label">
-                    SELECT OVERSEAS EDUCATION
-                </p>
-
-                <h1>
-                    Management Dashboard
-                </h1>
-
-            </div>
+    <main class="admin-main">
 
 
-            <!-- MANAGEMENT PROFILE -->
-
-            <div class="admin-profile">
-
-                <div class="admin-avatar">
-                    M
-                </div>
-
-                <div>
-
-                    <strong id="adminName">
-                        Management
-                    </strong>
-
-                    <small id="adminEmail">
-                        Loading...
-                    </small>
-
-                </div>
-
-            </div>
-
-        </header>
-
-
-
-        <!-- =========================================
-             DASHBOARD STATISTICS
-        ========================================== -->
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
 
         <section
-            class="stats-grid"
-            id="dashboardSection"
-        >
-
-
-            <!-- TOTAL LEADS -->
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    👥
-                </div>
-
-                <div>
-
-                    <span>
-                        Total Leads
-                    </span>
-
-                    <strong id="totalLeads">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
+            class="stats"
+            id="stats"
+        ></section>
 
 
 
-            <!-- NEW LEADS -->
+        <!-- =================================================
+             SEARCH & FILTER
+        ================================================== -->
 
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    🆕
-                </div>
-
-                <div>
-
-                    <span>
-                        New Leads
-                    </span>
-
-                    <strong id="newLeads">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
+        <section class="toolbar">
 
 
-
-            <!-- CONTACTED -->
-
-            <div class="stat-card">
-
-                <div class="stat-icon">
-                    📞
-                </div>
-
-                <div>
-
-                    <span>
-                        Contacted
-                    </span>
-
-                    <strong id="contactedLeads">
-                        0
-                    </strong>
-
-                </div>
-
-            </div>
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search name, phone, email or product"
+                autocomplete="off"
+            >
 
 
+            <select id="productFilter">
 
-            <!-- CONVERTED -->
+                <option value="">
+                    All Products
+                </option>
 
-            <div class="stat-card">
+                <option>
+                    Germany Opportunity Card
+                </option>
 
-                <div class="stat-icon">
-                    ✅
-                </div>
+                <option>
+                    Germany EU Blue Card
+                </option>
 
-                <div>
+                <option>
+                    Ireland Critical Skills Employment Permit
+                </option>
 
-                    <span>
-                        Converted
-                    </span>
+                <option>
+                    Netherlands Highly Skilled Migrant
+                </option>
 
-                    <strong id="convertedLeads">
-                        0
-                    </strong>
+                <option>
+                    New Zealand Employment Pathway
+                </option>
 
-                </div>
+                <option>
+                    European Employment Pathway
+                </option>
 
-            </div>
+            </select>
+
+
+            <select id="statusFilter">
+
+                <option value="">
+                    All Statuses
+                </option>
+
+                <option>
+                    New
+                </option>
+
+                <option>
+                    Contacted
+                </option>
+
+                <option>
+                    Follow-up
+                </option>
+
+                <option>
+                    Qualified
+                </option>
+
+                <option>
+                    Documents Pending
+                </option>
+
+                <option>
+                    Documents Received
+                </option>
+
+                <option>
+                    Processing
+                </option>
+
+                <option>
+                    Converted
+                </option>
+
+                <option>
+                    Closed
+                </option>
+
+                <option>
+                    Not Interested
+                </option>
+
+            </select>
+
 
         </section>
 
 
 
-        <!-- =========================================
-             LEADS SECTION
-        ========================================== -->
+        <!-- =================================================
+             LEADS
+        ================================================== -->
 
-        <section
-            class="leads-section"
-            id="leadsSection"
-        >
+        <section class="lead-section">
 
 
-            <!-- SECTION HEADER -->
-
-            <div class="section-header">
+            <div class="section-title">
 
                 <div>
 
-                    <span class="section-label">
-                        CLIENT ENQUIRIES
-                    </span>
-
                     <h2>
-                        Lead Management
+                        Client Leads
                     </h2>
 
                     <p>
@@ -303,531 +228,78 @@
                 </div>
 
 
-                <!-- REFRESH -->
-
                 <button
+                    id="refreshBtn"
                     type="button"
-                    id="refreshButton"
-                    class="refresh-button"
                 >
-                    ↻ Refresh
+                    Refresh
                 </button>
 
             </div>
 
 
+            <div
+                id="leadList"
+                class="lead-list"
+            ></div>
 
-            <!-- =========================================
-                 FILTER BAR
-            ========================================== -->
-
-            <div class="filter-bar">
-
-
-                <!-- SEARCH -->
-
-                <input
-                    type="search"
-                    id="searchInput"
-                    placeholder="Search by name, email, phone..."
-                >
-
-
-                <!-- STATUS -->
-
-                <select id="statusFilter">
-
-                    <option value="all">
-                        All Status
-                    </option>
-
-                    <option value="new">
-                        New
-                    </option>
-
-                    <option value="contacted">
-                        Contacted
-                    </option>
-
-                    <option value="follow-up">
-                        Follow-up
-                    </option>
-
-                    <option value="converted">
-                        Converted
-                    </option>
-
-                    <option value="closed">
-                        Closed
-                    </option>
-
-                </select>
-
-            </div>
-
-
-
-            <!-- =========================================
-                 LEADS TABLE
-            ========================================== -->
-
-            <div class="table-container">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Client
-                            </th>
-
-                            <th>
-                                Contact
-                            </th>
-
-                            <th>
-                                Program
-                            </th>
-
-                            <th>
-                                Experience
-                            </th>
-
-                            <th>
-                                Submitted
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="leadsTableBody">
-
-                        <tr>
-
-                            <td
-                                colspan="7"
-                                class="loading-cell"
-                            >
-                                Loading leads...
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
 
         </section>
+
 
     </main>
 
 
 
-    <!-- =========================================
+    <!-- =====================================================
          LEAD DETAILS MODAL
-    ========================================== -->
+    ====================================================== -->
 
     <div
         id="leadModal"
-        class="modal"
+        class="lead-modal"
     >
 
-        <div class="modal-content">
+
+        <div
+            class="lead-backdrop"
+            id="closeLead"
+        ></div>
 
 
-            <!-- MODAL HEADER -->
-
-            <div class="modal-header">
-
-                <div>
-
-                    <span>
-                        CLIENT ENQUIRY
-                    </span>
-
-                    <h2 id="modalClientName">
-                        Client Details
-                    </h2>
-
-                </div>
+        <div class="lead-box">
 
 
-                <button
-                    type="button"
-                    id="closeModal"
-                    class="close-modal"
-                >
-                    ×
-                </button>
+            <button
+                class="close-btn"
+                id="closeLeadBtn"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
 
-            </div>
-
-
-
-            <!-- LEAD DETAILS -->
 
             <div
                 id="leadDetails"
-                class="lead-details"
             ></div>
 
 
-
-            <!-- MODAL FOOTER -->
-
-            <div class="modal-footer">
-
-                <label for="modalStatus">
-                    Update Status
-                </label>
-
-
-                <select id="modalStatus">
-
-                    <option value="new">
-                        New
-                    </option>
-
-                    <option value="contacted">
-                        Contacted
-                    </option>
-
-                    <option value="follow-up">
-                        Follow-up
-                    </option>
-
-                    <option value="converted">
-                        Converted
-                    </option>
-
-                    <option value="closed">
-                        Closed
-                    </option>
-
-                </select>
-
-
-                <button
-                    type="button"
-                    id="saveStatusButton"
-                    class="save-button"
-                >
-                    Save Status
-                </button>
-
-            </div>
-
         </div>
+
 
     </div>
 
 
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
-
-
-    <!-- ADMIN AUTHENTICATION -->
-
-    <script
-        type="module"
-        src="../js/admin-auth.js"
-    ></script>
-
-
-    <!-- ADMIN DASHBOARD -->
+    <!-- =====================================================
+         FIREBASE / MANAGEMENT DASHBOARD JAVASCRIPT
+    ====================================================== -->
 
     <script
         type="module"
         src="../js/admin-dashboard.js"
     ></script>
-
-
-
-    <!-- =========================================
-         SIDEBAR NAVIGATION
-    ========================================== -->
-
-    <script>
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-
-                const dashboardNav =
-                    document.getElementById("dashboardNav");
-
-                const clientLeadsNav =
-                    document.getElementById("clientLeadsNav");
-
-                const newLeadsNav =
-                    document.getElementById("newLeadsNav");
-
-                const dashboardSection =
-                    document.getElementById("dashboardSection");
-
-                const leadsSection =
-                    document.getElementById("leadsSection");
-
-                const statusFilter =
-                    document.getElementById("statusFilter");
-
-
-
-                /*
-                ============================================
-                REMOVE ACTIVE FROM ALL SIDEBAR BUTTONS
-                ============================================
-                */
-
-                function removeActive() {
-
-                    document
-                        .querySelectorAll(".sidebar-nav .nav-link")
-                        .forEach(function (button) {
-
-                            button.classList.remove("active");
-
-                        });
-
-                }
-
-
-
-                /*
-                ============================================
-                SHOW DASHBOARD
-                ============================================
-                */
-
-                function showDashboard() {
-
-                    removeActive();
-
-                    dashboardNav.classList.add("active");
-
-
-                    /*
-                    Scroll to top of dashboard
-                    */
-
-                    window.scrollTo({
-
-                        top: 0,
-
-                        behavior: "smooth"
-
-                    });
-
-                }
-
-
-
-                /*
-                ============================================
-                SHOW ALL CLIENT LEADS
-                ============================================
-                */
-
-                function showClientLeads() {
-
-                    removeActive();
-
-                    clientLeadsNav.classList.add("active");
-
-
-                    /*
-                    Set status filter to ALL
-                    */
-
-                    if (statusFilter) {
-
-                        statusFilter.value = "all";
-
-                    }
-
-
-                    /*
-                    Scroll to leads section
-                    */
-
-                    leadsSection.scrollIntoView({
-
-                        behavior: "smooth",
-
-                        block: "start"
-
-                    });
-
-
-                    /*
-                    Tell dashboard JavaScript
-                    to refresh/filter the leads
-                    */
-
-                    if (
-                        typeof window.renderLeads === "function"
-                    ) {
-
-                        window.renderLeads();
-
-                    }
-
-                }
-
-
-
-                /*
-                ============================================
-                SHOW NEW LEADS
-                ============================================
-                */
-
-                function showNewLeads() {
-
-                    removeActive();
-
-                    newLeadsNav.classList.add("active");
-
-
-                    /*
-                    Set status filter to NEW
-                    */
-
-                    if (statusFilter) {
-
-                        statusFilter.value = "new";
-
-
-                        /*
-                        Trigger existing filter event
-                        */
-
-                        statusFilter.dispatchEvent(
-                            new Event("change")
-                        );
-
-                    }
-
-
-                    /*
-                    Scroll to leads section
-                    */
-
-                    leadsSection.scrollIntoView({
-
-                        behavior: "smooth",
-
-                        block: "start"
-
-                    });
-
-
-                    /*
-                    If your dashboard JS exposes
-                    renderLeads(), refresh it
-                    */
-
-                    if (
-                        typeof window.renderLeads === "function"
-                    ) {
-
-                        window.renderLeads();
-
-                    }
-
-                }
-
-
-
-                /*
-                ============================================
-                DASHBOARD CLICK
-                ============================================
-                */
-
-                if (dashboardNav) {
-
-                    dashboardNav.addEventListener(
-                        "click",
-                        showDashboard
-                    );
-
-                }
-
-
-
-                /*
-                ============================================
-                CLIENT LEADS CLICK
-                ============================================
-                */
-
-                if (clientLeadsNav) {
-
-                    clientLeadsNav.addEventListener(
-                        "click",
-                        showClientLeads
-                    );
-
-                }
-
-
-
-                /*
-                ============================================
-                NEW LEADS CLICK
-                ============================================
-                */
-
-                if (newLeadsNav) {
-
-                    newLeadsNav.addEventListener(
-                        "click",
-                        showNewLeads
-                    );
-
-                }
-
-
-
-                /*
-                ============================================
-                MAKE RENDER LEADS AVAILABLE
-                ============================================
-                */
-
-                /*
-                If your admin-dashboard.js already has
-                loadLeads(), this does not interfere.
-
-                The dashboard JS can expose:
-
-                window.renderLeads = loadLeads;
-
-                */
-
-
-            }
-        );
-
-    </script>
 
 
 </body>
