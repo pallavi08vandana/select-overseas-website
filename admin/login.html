@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Select Overseas Management Portal Login"
+    >
+
+    <meta
+        name="theme-color"
+        content="#06285f"
+    >
+
+    <title>
+        Management Login | Select Overseas
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="../css/admin.css"
+    >
+
+</head>
+
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+
+            <!-- ==========================================
+                 LOGO
+            =========================================== -->
+
+            <div class="login-logo">
+
+                <img
+                    src="../assets/select-overseas-logo.png"
+                    alt="Select Overseas Education"
+                >
+
+            </div>
+
+
+            <!-- ==========================================
+                 LOGIN HEADING
+            =========================================== -->
+
+            <div class="login-heading">
+
+                <span>
+                    MANAGEMENT PORTAL
+                </span>
+
+                <h1>
+                    Management Login
+                </h1>
+
+                <p>
+                    Authorized Select Overseas staff only.
+                </p>
+
+            </div>
+
+
+            <!-- ==========================================
+                 LOGIN FORM
+            =========================================== -->
+
+            <form
+                id="adminLoginForm"
+                novalidate
+            >
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter management email"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    id="loginButton"
+                    class="login-button"
+                >
+                    Sign In
+                </button>
+
+
+                <!-- ERROR MESSAGE -->
+
+                <div
+                    id="loginError"
+                    class="login-error"
+                    role="alert"
+                    aria-live="polite"
+                ></div>
+
+
+            </form>
+
+
+            <!-- ==========================================
+                 BACK TO WEBSITE
+            =========================================== -->
+
+            <a
+                href="../index.html"
+                class="back-link"
+            >
+                ← Back to website
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================================
+         FIREBASE / ADMIN AUTHENTICATION
+    =============================================== -->
+
+    <script
+        type="module"
+        src="../js/admin-auth.js"
+    ></script>
+
+
+</body>
+
+</html>

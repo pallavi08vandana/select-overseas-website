@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin"
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
+    }
+
+    function validProduct(product) {
+      return product in [
+        "Germany Opportunity Card",
+        "Germany EU Blue Card",
+        "Ireland Critical Skills Employment Permit",
+        "Netherlands Highly Skilled Migrant",
+        "New Zealand Employment Pathway",
+        "European Employment Pathway"
+      ];
+    }
+
+    match /leads/{leadId} {
+      allow create: if
+        request.resource.data.status == "New"
+        && validProduct(request.resource.data.product)
+        && request.resource.data.fullName is string
+        && request.resource.data.mobile is string
+        && request.resource.data.email is string
+        && request.resource.data.keys().hasAll([
+          "fullName", "mobile", "email", "product", "createdAt", "status"
+        ]);
+
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow get: if request.auth != null && request.auth.uid == userId;
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
