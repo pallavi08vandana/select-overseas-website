@@ -17,6 +17,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 
+
 /* =========================================================
    GLOBAL VARIABLES
 ========================================================= */
@@ -25,31 +26,65 @@ let allLeads = [];
 let selectedLead = null;
 
 
+
 /* =========================================================
    ELEMENTS
 ========================================================= */
 
-const tableBody = document.getElementById("leadsTableBody");
+const tableBody =
+    document.getElementById("leadsTableBody");
 
-const totalLeads = document.getElementById("totalLeads");
-const newLeads = document.getElementById("newLeads");
-const contactedLeads = document.getElementById("contactedLeads");
-const convertedLeads = document.getElementById("convertedLeads");
+const totalLeads =
+    document.getElementById("totalLeads");
 
-const searchInput = document.getElementById("searchInput");
-const statusFilter = document.getElementById("statusFilter");
-const refreshButton = document.getElementById("refreshButton");
+const newLeads =
+    document.getElementById("newLeads");
 
-const modal = document.getElementById("leadModal");
-const closeModal = document.getElementById("closeModal");
+const contactedLeads =
+    document.getElementById("contactedLeads");
 
-const leadDetails = document.getElementById("leadDetails");
-const modalClientName = document.getElementById("modalClientName");
-const modalStatus = document.getElementById("modalStatus");
-const saveStatusButton = document.getElementById("saveStatusButton");
+const convertedLeads =
+    document.getElementById("convertedLeads");
 
-const adminName = document.getElementById("adminName");
-const adminEmail = document.getElementById("adminEmail");
+const searchInput =
+    document.getElementById("searchInput");
+
+const productFilter =
+    document.getElementById("productFilter");
+
+const statusFilter =
+    document.getElementById("statusFilter");
+
+const refreshButton =
+    document.getElementById("refreshButton");
+
+const modal =
+    document.getElementById("leadModal");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+const closeLead =
+    document.getElementById("closeLead");
+
+const leadDetails =
+    document.getElementById("leadDetails");
+
+const modalClientName =
+    document.getElementById("modalClientName");
+
+const modalStatus =
+    document.getElementById("modalStatus");
+
+const saveStatusButton =
+    document.getElementById("saveStatusButton");
+
+const adminEmail =
+    document.getElementById("adminEmail");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
 
 
 /* =========================================================
@@ -59,107 +94,84 @@ const adminEmail = document.getElementById("adminEmail");
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
+
         window.location.href = "login.html";
+
         return;
+
     }
 
-    console.log("Management user logged in:", user.email);
+
+    console.log(
+        "Management user logged in:",
+        user.email
+    );
+
 
     if (adminEmail) {
-        adminEmail.textContent = user.email || "";
+
+        adminEmail.textContent =
+            user.email || "";
+
     }
 
-    if (adminName) {
-        adminName.textContent = "Management";
-    }
 
     await loadLeads();
+
 });
 
 
+
 /* =========================================================
-   MANAGEMENT LOGOUT
+   LOGOUT
 ========================================================= */
-
-const logoutButton =
-    document.getElementById("logoutButton") ||
-    document.querySelector("[data-logout]") ||
-    document.querySelector(".logout-button") ||
-    Array.from(document.querySelectorAll("button, a")).find(
-        element =>
-            element.textContent.trim().toLowerCase() === "logout"
-    );
-
 
 if (logoutButton) {
 
-    logoutButton.addEventListener("click", async function (event) {
+    logoutButton.addEventListener(
+        "click",
+        async function () {
 
-        event.preventDefault();
-
-        if (logoutButton.disabled) {
-            return;
-        }
-
-        logoutButton.disabled = true;
-
-        const originalText =
-            logoutButton.textContent.trim();
-
-        logoutButton.textContent = "Logging out...";
-
-
-        try {
-
-            /*
-                Sign out from Firebase Authentication
-            */
-
-            await signOut(auth);
-
-
-            /*
-                Clear temporary browser session data
-            */
-
-            sessionStorage.clear();
-
-
-            /*
-                Redirect to management login
-            */
-
-            window.location.replace("./login.html");
-
-
-        } catch (error) {
-
-            console.error(
-                "Management logout failed:",
-                error
-            );
-
-            logoutButton.disabled = false;
+            logoutButton.disabled = true;
 
             logoutButton.textContent =
-                originalText || "Logout";
+                "Logging out...";
 
 
-            alert(
-                "Logout failed. Please try again."
-            );
+            try {
+
+                await signOut(auth);
+
+                sessionStorage.clear();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Logout failed:",
+                    error
+                );
+
+                logoutButton.disabled = false;
+
+                logoutButton.textContent =
+                    "Logout";
+
+                alert(
+                    "Logout failed. Please try again."
+                );
+
+            }
+
         }
-
-    });
-
-} else {
-
-    console.warn(
-        "Logout button was not found. " +
-        "Please add id='logoutButton' to the logout button."
     );
 
 }
+
 
 
 /* =========================================================
@@ -169,63 +181,74 @@ if (logoutButton) {
 async function loadLeads() {
 
     if (!tableBody) {
-        console.error("leadsTableBody not found.");
+
+        console.error(
+            "leadsTableBody not found."
+        );
+
         return;
+
     }
 
 
     tableBody.innerHTML = `
+
         <tr>
-            <td colspan="7" class="loading-cell">
+
+            <td
+                colspan="7"
+                class="loading-cell"
+            >
                 Loading leads...
             </td>
+
         </tr>
+
     `;
 
 
     try {
 
-        /*
-            Firestore collection:
+        const leadsRef =
+            collection(
+                db,
+                "leads"
+            );
 
-            leads
-                ├── lead document 1
-                ├── lead document 2
-                └── lead document 3
-        */
 
-        const leadsRef = collection(db, "leads");
+        const snapshot =
+            await getDocs(leadsRef);
 
-        const snapshot = await getDocs(leadsRef);
 
         allLeads = [];
 
 
-        snapshot.forEach((documentSnapshot) => {
+        snapshot.forEach(
+            (documentSnapshot) => {
 
-            allLeads.push({
-                id: documentSnapshot.id,
-                ...documentSnapshot.data()
-            });
+                allLeads.push({
 
-        });
+                    id: documentSnapshot.id,
+
+                    ...documentSnapshot.data()
+
+                });
+
+            }
+        );
+
+
+        allLeads.sort(
+            (a, b) =>
+                getDateValue(b) -
+                getDateValue(a)
+        );
 
 
         console.log(
             "Successfully loaded leads:",
             allLeads
         );
-
-
-        /*
-            Newest leads first
-        */
-
-        allLeads.sort((a, b) => {
-
-            return getDateValue(b) - getDateValue(a);
-
-        });
 
 
         updateStatistics();
@@ -241,29 +264,30 @@ async function loadLeads() {
         );
 
 
-        let message =
-            "Unable to load leads.";
-
-
-        if (error?.code) {
-
-            message +=
-                ` Error: ${error.code}`;
-
-        }
-
-
         tableBody.innerHTML = `
+
             <tr>
-                <td colspan="7" class="error-cell">
-                    ${escapeHTML(message)}
+
+                <td
+                    colspan="7"
+                    class="error-cell"
+                >
+                    Unable to load leads.
+                    ${escapeHTML(
+                        error?.code
+                            ? `Error: ${error.code}`
+                            : ""
+                    )}
                 </td>
+
             </tr>
+
         `;
 
     }
 
 }
+
 
 
 /* =========================================================
@@ -272,17 +296,19 @@ async function loadLeads() {
 
 function getDateValue(lead) {
 
-    if (!lead || !lead.createdAt) {
+    if (
+        !lead ||
+        !lead.createdAt
+    ) {
+
         return 0;
+
     }
 
 
-    /*
-        Firestore Timestamp
-    */
-
     if (
-        typeof lead.createdAt.toDate === "function"
+        typeof lead.createdAt.toDate ===
+        "function"
     ) {
 
         return lead.createdAt
@@ -292,26 +318,26 @@ function getDateValue(lead) {
     }
 
 
-    /*
-        JavaScript Date
-    */
-
-    if (lead.createdAt instanceof Date) {
+    if (
+        lead.createdAt instanceof Date
+    ) {
 
         return lead.createdAt.getTime();
 
     }
 
 
-    /*
-        String / number
-    */
-
     const date =
-        new Date(lead.createdAt);
+        new Date(
+            lead.createdAt
+        );
 
 
-    if (!isNaN(date.getTime())) {
+    if (
+        !isNaN(
+            date.getTime()
+        )
+    ) {
 
         return date.getTime();
 
@@ -319,7 +345,9 @@ function getDateValue(lead) {
 
 
     return 0;
+
 }
+
 
 
 /* =========================================================
@@ -350,7 +378,9 @@ function formatDate(lead) {
                 minute: "2-digit"
             }
         );
+
 }
+
 
 
 /* =========================================================
@@ -366,21 +396,27 @@ function updateStatistics() {
     const newCount =
         allLeads.filter(
             lead =>
-                normalizeStatus(lead.status) === "new"
+                normalizeStatus(
+                    lead.status
+                ) === "new"
         ).length;
 
 
     const contactedCount =
         allLeads.filter(
             lead =>
-                normalizeStatus(lead.status) === "contacted"
+                normalizeStatus(
+                    lead.status
+                ) === "contacted"
         ).length;
 
 
     const convertedCount =
         allLeads.filter(
             lead =>
-                normalizeStatus(lead.status) === "converted"
+                normalizeStatus(
+                    lead.status
+                ) === "converted"
         ).length;
 
 
@@ -418,6 +454,7 @@ function updateStatistics() {
 }
 
 
+
 /* =========================================================
    NORMALIZE STATUS
 ========================================================= */
@@ -434,9 +471,13 @@ function normalizeStatus(status) {
     return String(status)
         .trim()
         .toLowerCase()
-        .replace(/\s+/g, "-");
+        .replace(
+            /\s+/g,
+            "-"
+        );
 
 }
+
 
 
 /* =========================================================
@@ -453,12 +494,18 @@ function formatStatus(status) {
 
 
     return String(status)
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, letter =>
-            letter.toUpperCase()
+        .replace(
+            /-/g,
+            " "
+        )
+        .replace(
+            /\b\w/g,
+            letter =>
+                letter.toUpperCase()
         );
 
 }
+
 
 
 /* =========================================================
@@ -478,11 +525,15 @@ function getField(
     }
 
 
-    for (const field of fields) {
+    for (
+        const field of fields
+    ) {
 
         if (
-            object[field] !== undefined &&
-            object[field] !== null &&
+            object[field] !==
+                undefined &&
+            object[field] !==
+                null &&
             object[field] !== ""
         ) {
 
@@ -496,6 +547,7 @@ function getField(
     return fallback;
 
 }
+
 
 
 /* =========================================================
@@ -514,11 +566,18 @@ function renderLeads(leads) {
     if (!leads.length) {
 
         tableBody.innerHTML = `
+
             <tr>
-                <td colspan="7" class="empty-cell">
+
+                <td
+                    colspan="7"
+                    class="empty-cell"
+                >
                     No client enquiries found.
                 </td>
+
             </tr>
+
         `;
 
         return;
@@ -529,221 +588,225 @@ function renderLeads(leads) {
     tableBody.innerHTML = "";
 
 
-    leads.forEach((lead) => {
+    leads.forEach(
+        (lead) => {
 
-        const row =
-            document.createElement("tr");
-
-
-        /*
-            CLIENT NAME
-        */
-
-        const name =
-            getField(
-                lead,
-                [
-                    "fullName",
-                    "name",
-                    "clientName",
-                    "firstName"
-                ],
-                "Unknown Client"
-            );
+            const row =
+                document.createElement(
+                    "tr"
+                );
 
 
-        /*
-            EMAIL
-        */
-
-        const email =
-            getField(
-                lead,
-                [
-                    "email",
-                    "emailAddress"
-                ],
-                "—"
-            );
+            const name =
+                getField(
+                    lead,
+                    [
+                        "fullName",
+                        "name",
+                        "clientName",
+                        "firstName"
+                    ],
+                    "Unknown Client"
+                );
 
 
-        /*
-            PHONE
-        */
-
-        const phone =
-            getField(
-                lead,
-                [
-                    "mobile",
-                    "phone",
-                    "phoneNumber",
-                    "mobileNumber"
-                ],
-                "—"
-            );
+            const email =
+                getField(
+                    lead,
+                    [
+                        "email",
+                        "emailAddress"
+                    ]
+                );
 
 
-        /*
-            PROGRAM
-        */
-
-        const program =
-            getField(
-                lead,
-                [
-                    "product",
-                    "program",
-                    "service",
-                    "visaType",
-                    "preferredProgram",
-                    "jobSector"
-                ],
-                "—"
-            );
+            const phone =
+                getField(
+                    lead,
+                    [
+                        "mobile",
+                        "phone",
+                        "phoneNumber",
+                        "mobileNumber"
+                    ]
+                );
 
 
-        /*
-            EXPERIENCE
-        */
-
-        const experience =
-            getField(
-                lead,
-                [
-                    "relevantWorkExperience",
-                    "workExperience",
-                    "experience"
-                ],
-                "—"
-            );
+            const program =
+                getField(
+                    lead,
+                    [
+                        "product",
+                        "program",
+                        "service",
+                        "visaType",
+                        "preferredProgram",
+                        "jobSector"
+                    ]
+                );
 
 
-        /*
-            STATUS
-        */
-
-        const status =
-            normalizeStatus(
-                lead.status
-            );
-
-
-        /*
-            ROW
-        */
-
-        row.innerHTML = `
-
-            <td>
-
-                <div class="client-cell">
-
-                    <strong>
-                        ${escapeHTML(name)}
-                    </strong>
-
-                    <small>
-                        ${escapeHTML(lead.id)}
-                    </small>
-
-                </div>
-
-            </td>
+            const experience =
+                getField(
+                    lead,
+                    [
+                        "relevantWorkExperience",
+                        "workExperience",
+                        "experience"
+                    ]
+                );
 
 
-            <td>
-
-                <div class="contact-cell">
-
-                    <span>
-                        ${escapeHTML(email)}
-                    </span>
-
-                    <span>
-                        ${escapeHTML(phone)}
-                    </span>
-
-                </div>
-
-            </td>
+            const status =
+                normalizeStatus(
+                    lead.status
+                );
 
 
-            <td>
-                ${escapeHTML(String(program))}
-            </td>
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="client-cell">
+
+                        <strong>
+                            ${escapeHTML(
+                                name
+                            )}
+                        </strong>
+
+                        <small>
+                            ${escapeHTML(
+                                lead.id
+                            )}
+                        </small>
+
+                    </div>
+
+                </td>
 
 
-            <td>
-                ${escapeHTML(String(experience))}
-            </td>
+                <td>
+
+                    <div class="contact-cell">
+
+                        <span>
+                            ${escapeHTML(
+                                email
+                            )}
+                        </span>
+
+                        <span>
+                            ${escapeHTML(
+                                phone
+                            )}
+                        </span>
+
+                    </div>
+
+                </td>
 
 
-            <td>
-                ${escapeHTML(formatDate(lead))}
-            </td>
+                <td>
+
+                    <div class="program-cell">
+
+                        ${escapeHTML(
+                            String(program)
+                        )}
+
+                    </div>
+
+                </td>
 
 
-            <td>
+                <td>
 
-                <span
-                    class="status status-${escapeHTML(status)}"
-                >
                     ${escapeHTML(
-                        formatStatus(status)
+                        String(experience)
                     )}
-                </span>
 
-            </td>
-
-
-            <td>
-
-                <button
-                    type="button"
-                    class="view-button"
-                    data-id="${escapeHTML(lead.id)}"
-                >
-                    View
-                </button>
-
-            </td>
-
-        `;
+                </td>
 
 
-        tableBody.appendChild(row);
+                <td>
 
-    });
+                    ${escapeHTML(
+                        formatDate(lead)
+                    )}
+
+                </td>
 
 
-    /*
-        View button events
-    */
+                <td>
+
+                    <span
+                        class="status status-${escapeHTML(
+                            status
+                        )}"
+                    >
+
+                        ${escapeHTML(
+                            formatStatus(status)
+                        )}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="view-button"
+                        data-id="${escapeHTML(
+                            lead.id
+                        )}"
+                    >
+                        View
+                    </button>
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
 
     document
-        .querySelectorAll(".view-button")
-        .forEach(button => {
+        .querySelectorAll(
+            ".view-button"
+        )
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                function () {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    const leadId =
-                        this.dataset.id;
+                        openLead(
+                            this.dataset.id
+                        );
 
-                    openLead(leadId);
+                    }
+                );
 
-                }
-            );
-
-        });
+            }
+        );
 
 }
 
 
+
 /* =========================================================
-   OPEN LEAD DETAILS
+   OPEN LEAD
 ========================================================= */
 
 function openLead(leadId) {
@@ -751,7 +814,8 @@ function openLead(leadId) {
     selectedLead =
         allLeads.find(
             lead =>
-                lead.id === leadId
+                lead.id ===
+                leadId
         );
 
 
@@ -803,6 +867,7 @@ function openLead(leadId) {
         leadDetails.innerHTML = `
 
             <div class="detail-grid">
+
 
                 ${detailItem(
                     "Full Name",
@@ -963,8 +1028,11 @@ function openLead(leadId) {
 
                 ${detailItem(
                     "Submitted",
-                    formatDate(selectedLead)
+                    formatDate(
+                        selectedLead
+                    )
                 )}
+
 
             </div>
 
@@ -1019,30 +1087,41 @@ function openLead(leadId) {
 
     if (modal) {
 
-        modal.classList.add("show");
+        modal.classList.add(
+            "show"
+        );
 
     }
 
 }
 
 
+
 /* =========================================================
    DETAIL ITEM
 ========================================================= */
 
-function detailItem(label, value) {
+function detailItem(
+    label,
+    value
+) {
 
     return `
 
         <div class="detail-item">
 
             <span>
-                ${escapeHTML(label)}
+                ${escapeHTML(
+                    label
+                )}
             </span>
 
             <strong>
                 ${escapeHTML(
-                    String(value || "—")
+                    String(
+                        value ||
+                        "—"
+                    )
                 )}
             </strong>
 
@@ -1051,6 +1130,7 @@ function detailItem(label, value) {
     `;
 
 }
+
 
 
 /* =========================================================
@@ -1071,7 +1151,8 @@ if (saveStatusButton) {
 
 
             const newStatus =
-                modalStatus?.value || "new";
+                modalStatus?.value ||
+                "new";
 
 
             saveStatusButton.disabled =
@@ -1095,16 +1176,14 @@ if (saveStatusButton) {
                 await updateDoc(
                     leadRef,
                     {
-                        status: newStatus,
+                        status:
+                            newStatus,
+
                         updatedAt:
                             serverTimestamp()
                     }
                 );
 
-
-                /*
-                    Update local lead
-                */
 
                 selectedLead.status =
                     newStatus;
@@ -1120,7 +1199,9 @@ if (saveStatusButton) {
 
                 if (index !== -1) {
 
-                    allLeads[index].status =
+                    allLeads[
+                        index
+                    ].status =
                         newStatus;
 
                 }
@@ -1157,12 +1238,10 @@ if (saveStatusButton) {
                     "Unable to update lead status. Please try again."
                 );
 
-
             } finally {
 
                 saveStatusButton.disabled =
                     false;
-
 
                 saveStatusButton.textContent =
                     "Save Status";
@@ -1173,6 +1252,7 @@ if (saveStatusButton) {
     );
 
 }
+
 
 
 /* =========================================================
@@ -1189,6 +1269,22 @@ if (searchInput) {
 }
 
 
+
+/* =========================================================
+   PRODUCT FILTER
+========================================================= */
+
+if (productFilter) {
+
+    productFilter.addEventListener(
+        "change",
+        applyFilters
+    );
+
+}
+
+
+
 /* =========================================================
    STATUS FILTER
 ========================================================= */
@@ -1201,6 +1297,7 @@ if (statusFilter) {
     );
 
 }
+
 
 
 /* =========================================================
@@ -1217,6 +1314,12 @@ function applyFilters() {
             : "";
 
 
+    const product =
+        productFilter
+            ? productFilter.value
+            : "";
+
+
     const status =
         statusFilter
             ? statusFilter.value
@@ -1224,72 +1327,88 @@ function applyFilters() {
 
 
     const filtered =
-        allLeads.filter(lead => {
+        allLeads.filter(
+            lead => {
+
+                const searchableText = [
+
+                    lead.fullName,
+                    lead.name,
+                    lead.clientName,
+                    lead.email,
+                    lead.emailAddress,
+                    lead.mobile,
+                    lead.phone,
+                    lead.phoneNumber,
+                    lead.product,
+                    lead.program,
+                    lead.service,
+                    lead.visaType,
+                    lead.currentJobTitle,
+                    lead.preferredJobSector,
+                    lead.jobSector,
+                    lead.source
+
+                ]
+                    .filter(Boolean)
+                    .join(" ")
+                    .toLowerCase();
 
 
-            const searchableText = [
-
-                lead.fullName,
-
-                lead.name,
-
-                lead.clientName,
-
-                lead.email,
-
-                lead.emailAddress,
-
-                lead.mobile,
-
-                lead.phone,
-
-                lead.phoneNumber,
-
-                lead.product,
-
-                lead.program,
-
-                lead.service,
-
-                lead.visaType,
-
-                lead.currentJobTitle,
-
-                lead.preferredJobSector,
-
-                lead.jobSector,
-
-                lead.source
-
-            ]
-                .filter(Boolean)
-                .join(" ")
-                .toLowerCase();
+                const matchesSearch =
+                    !search ||
+                    searchableText.includes(
+                        search
+                    );
 
 
-            const matchesSearch =
-                !search ||
-                searchableText.includes(search);
+                const leadProduct =
+                    String(
+                        getField(
+                            lead,
+                            [
+                                "product",
+                                "program",
+                                "service",
+                                "visaType"
+                            ],
+                            ""
+                        )
+                    );
 
 
-            const matchesStatus =
-                status === "all" ||
-                normalizeStatus(
-                    lead.status
-                ) === status;
+                const matchesProduct =
+                    !product ||
+                    leadProduct
+                        .toLowerCase()
+                        .includes(
+                            product.toLowerCase()
+                        );
 
 
-            return (
-                matchesSearch &&
-                matchesStatus
-            );
+                const matchesStatus =
+                    status === "all" ||
+                    normalizeStatus(
+                        lead.status
+                    ) === status;
 
-        });
+
+                return (
+                    matchesSearch &&
+                    matchesProduct &&
+                    matchesStatus
+                );
+
+            }
+        );
 
 
-    renderLeads(filtered);
+    renderLeads(
+        filtered
+    );
 
 }
+
 
 
 /* =========================================================
@@ -1326,60 +1445,46 @@ if (refreshButton) {
 }
 
 
+
 /* =========================================================
    CLOSE MODAL
 ========================================================= */
+
+function closeLeadModal() {
+
+    if (modal) {
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    selectedLead = null;
+
+}
+
 
 if (closeModal) {
 
     closeModal.addEventListener(
         "click",
-        function () {
-
-            if (modal) {
-
-                modal.classList.remove(
-                    "show"
-                );
-
-            }
-
-
-            selectedLead = null;
-
-        }
+        closeLeadModal
     );
 
 }
 
 
-/* =========================================================
-   CLOSE MODAL OUTSIDE
-========================================================= */
+if (closeLead) {
 
-if (modal) {
-
-    modal.addEventListener(
+    closeLead.addEventListener(
         "click",
-        function (event) {
-
-            if (
-                event.target === modal
-            ) {
-
-                modal.classList.remove(
-                    "show"
-                );
-
-
-                selectedLead = null;
-
-            }
-
-        }
+        closeLeadModal
     );
 
 }
+
 
 
 /* =========================================================
@@ -1392,15 +1497,12 @@ document.addEventListener(
 
         if (
             event.key === "Escape" &&
-            modal?.classList.contains("show")
+            modal?.classList.contains(
+                "show"
+            )
         ) {
 
-            modal.classList.remove(
-                "show"
-            );
-
-
-            selectedLead = null;
+            closeLeadModal();
 
         }
 
@@ -1408,25 +1510,30 @@ document.addEventListener(
 );
 
 
+
 /* =========================================================
    SIDEBAR NAVIGATION
 ========================================================= */
 
-document
-    .querySelectorAll(".nav-link")
-    .forEach(link => {
+const navLinks =
+    document.querySelectorAll(
+        ".nav-link"
+    );
+
+
+navLinks.forEach(
+    link => {
 
         link.addEventListener(
             "click",
             function () {
 
-                document
-                    .querySelectorAll(".nav-link")
-                    .forEach(item =>
+                navLinks.forEach(
+                    item =>
                         item.classList.remove(
                             "active"
                         )
-                    );
+                );
 
 
                 this.classList.add(
@@ -1436,11 +1543,13 @@ document
             }
         );
 
-    });
+    }
+);
+
 
 
 /* =========================================================
-   NEW LEADS NAVIGATION
+   NEW LEADS
 ========================================================= */
 
 function showNewLeadsOnly() {
@@ -1461,6 +1570,7 @@ function showNewLeadsOnly() {
 }
 
 
+
 /* =========================================================
    HASH NAVIGATION
 ========================================================= */
@@ -1471,11 +1581,41 @@ function handleHashNavigation() {
         window.location.hash;
 
 
-    if (hash === "#new-leads") {
+    navLinks.forEach(
+        link =>
+            link.classList.remove(
+                "active"
+            )
+    );
+
+
+    if (
+        hash === "#new-leads"
+    ) {
+
+        document
+            .getElementById(
+                "newLeadsNav"
+            )
+            ?.classList.add(
+                "active"
+            );
 
         showNewLeadsOnly();
 
-    } else if (hash === "#leads") {
+
+    } else if (
+        hash === "#leads"
+    ) {
+
+        document
+            .getElementById(
+                "clientLeadsNav"
+            )
+            ?.classList.add(
+                "active"
+            );
+
 
         if (statusFilter) {
 
@@ -1487,14 +1627,21 @@ function handleHashNavigation() {
 
         applyFilters();
 
+
+    } else {
+
+        document
+            .getElementById(
+                "dashboardNav"
+            )
+            ?.classList.add(
+                "active"
+            );
+
     }
 
 }
 
-
-/*
-    Run when hash changes
-*/
 
 window.addEventListener(
     "hashchange",
@@ -1502,14 +1649,11 @@ window.addEventListener(
 );
 
 
-/*
-    Small delay so leads load first
-*/
-
 setTimeout(
     handleHashNavigation,
     300
 );
+
 
 
 /* =========================================================
@@ -1518,7 +1662,9 @@ setTimeout(
 
 function escapeHTML(value) {
 
-    return String(value ?? "")
+    return String(
+        value ?? ""
+    )
         .replace(
             /&/g,
             "&amp;"

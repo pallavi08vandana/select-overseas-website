@@ -15,6 +15,11 @@
         content="#06285f"
     >
 
+    <meta
+        name="description"
+        content="Select Overseas Management Dashboard"
+    >
+
     <title>
         Management Dashboard | Select Overseas
     </title>
@@ -31,51 +36,89 @@
 
 
     <!-- =====================================================
-         MANAGEMENT HEADER
+         SIDEBAR
     ====================================================== -->
 
-    <header class="admin-header">
+    <aside class="admin-sidebar">
 
 
         <!-- LOGO -->
 
-        <div class="admin-brand">
+        <div class="sidebar-logo">
 
-            <a
-                href="../index.html"
-                class="admin-logo-link"
-            >
+            <a href="../index.html">
 
                 <img
-                    src="../assets/select-overseas-logo.png"
-                    alt="Select Overseas"
-                    class="admin-logo"
+                    src="../assets/select-logo-11.jpg"
+                    alt="Select Overseas Education"
                 >
 
             </a>
 
+        </div>
 
-            <span class="admin-brand-text">
-                Management Portal
+
+        <!-- PORTAL TITLE -->
+
+        <div class="sidebar-title">
+
+            <span>
+                MANAGEMENT PORTAL
             </span>
+
+            <h2>
+                Dashboard
+            </h2>
 
         </div>
 
 
-        <!-- ADMIN INFORMATION -->
+        <!-- NAVIGATION -->
 
-        <div class="admin-header-right">
+        <nav class="sidebar-nav">
 
-            <span
-                id="adminEmail"
-                class="admin-email"
-            ></span>
 
+            <a
+                href="#dashboard"
+                class="nav-link active"
+                id="dashboardNav"
+            >
+                <span class="nav-icon">📊</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="#leads"
+                class="nav-link"
+                id="clientLeadsNav"
+            >
+                <span class="nav-icon">👥</span>
+                Client Leads
+            </a>
+
+
+            <a
+                href="#new-leads"
+                class="nav-link"
+                id="newLeadsNav"
+            >
+                <span class="nav-icon">🆕</span>
+                New Leads
+            </a>
+
+
+        </nav>
+
+
+        <!-- LOGOUT -->
+
+        <div class="sidebar-bottom">
 
             <button
-                id="logoutBtn"
-                class="logout"
                 type="button"
+                id="logoutButton"
+                class="sidebar-logout"
             >
                 Logout
             </button>
@@ -83,171 +126,379 @@
         </div>
 
 
-    </header>
+    </aside>
 
 
 
     <!-- =====================================================
-         MAIN CONTENT
+         MAIN AREA
     ====================================================== -->
 
-    <main class="admin-main">
+    <div class="admin-content">
 
 
         <!-- =================================================
-             STATISTICS
+             TOP HEADER
         ================================================== -->
 
-        <section
-            class="stats"
-            id="stats"
-        ></section>
+        <header class="dashboard-header">
 
 
+            <div>
 
-        <!-- =================================================
-             SEARCH & FILTER
-        ================================================== -->
+                <span class="dashboard-label">
+                    SELECT OVERSEAS EDUCATION
+                </span>
 
-        <section class="toolbar">
-
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search name, phone, email or product"
-                autocomplete="off"
-            >
-
-
-            <select id="productFilter">
-
-                <option value="">
-                    All Products
-                </option>
-
-                <option>
-                    Germany Opportunity Card
-                </option>
-
-                <option>
-                    Germany EU Blue Card
-                </option>
-
-                <option>
-                    Ireland Critical Skills Employment Permit
-                </option>
-
-                <option>
-                    Netherlands Highly Skilled Migrant
-                </option>
-
-                <option>
-                    New Zealand Employment Pathway
-                </option>
-
-                <option>
-                    European Employment Pathway
-                </option>
-
-            </select>
-
-
-            <select id="statusFilter">
-
-                <option value="">
-                    All Statuses
-                </option>
-
-                <option>
-                    New
-                </option>
-
-                <option>
-                    Contacted
-                </option>
-
-                <option>
-                    Follow-up
-                </option>
-
-                <option>
-                    Qualified
-                </option>
-
-                <option>
-                    Documents Pending
-                </option>
-
-                <option>
-                    Documents Received
-                </option>
-
-                <option>
-                    Processing
-                </option>
-
-                <option>
-                    Converted
-                </option>
-
-                <option>
-                    Closed
-                </option>
-
-                <option>
-                    Not Interested
-                </option>
-
-            </select>
-
-
-        </section>
-
-
-
-        <!-- =================================================
-             LEADS
-        ================================================== -->
-
-        <section class="lead-section">
-
-
-            <div class="section-title">
-
-                <div>
-
-                    <h2>
-                        Client Leads
-                    </h2>
-
-                    <p>
-                        Review and manage enquiries submitted through the website.
-                    </p>
-
-                </div>
-
-
-                <button
-                    id="refreshBtn"
-                    type="button"
-                >
-                    Refresh
-                </button>
+                <h1>
+                    Management Dashboard
+                </h1>
 
             </div>
 
 
-            <div
-                id="leadList"
-                class="lead-list"
-            ></div>
+            <div class="management-profile">
+
+                <div class="profile-circle">
+                    M
+                </div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        Management
+                    </strong>
+
+                    <span id="adminEmail">
+                        Loading...
+                    </span>
+
+                </div>
+
+            </div>
 
 
-        </section>
+        </header>
 
 
-    </main>
+
+        <!-- =================================================
+             DASHBOARD MAIN
+        ================================================== -->
+
+        <main class="admin-main">
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <section
+                class="stats"
+                id="stats"
+            >
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👥
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Leads
+                        </span>
+
+                        <strong id="totalLeads">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🆕
+                    </div>
+
+                    <div>
+
+                        <span>
+                            New Leads
+                        </span>
+
+                        <strong id="newLeads">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📞
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Contacted
+                        </span>
+
+                        <strong id="contactedLeads">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon converted-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Converted
+                        </span>
+
+                        <strong id="convertedLeads">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SEARCH AND FILTER
+            ================================================== -->
+
+            <section class="toolbar">
+
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by name, email, phone..."
+                    autocomplete="off"
+                >
+
+
+                <select id="productFilter">
+
+                    <option value="">
+                        All Products
+                    </option>
+
+                    <option value="Germany Opportunity Card">
+                        Germany Opportunity Card
+                    </option>
+
+                    <option value="Germany EU Blue Card">
+                        Germany EU Blue Card
+                    </option>
+
+                    <option value="Ireland Critical Skills Employment Permit">
+                        Ireland Critical Skills Employment Permit
+                    </option>
+
+                    <option value="Netherlands Highly Skilled Migrant">
+                        Netherlands Highly Skilled Migrant
+                    </option>
+
+                    <option value="New Zealand Employment Pathway">
+                        New Zealand Employment Pathway
+                    </option>
+
+                    <option value="European Employment Pathway">
+                        European Employment Pathway
+                    </option>
+
+                </select>
+
+
+                <select id="statusFilter">
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="new">
+                        New
+                    </option>
+
+                    <option value="contacted">
+                        Contacted
+                    </option>
+
+                    <option value="follow-up">
+                        Follow-up
+                    </option>
+
+                    <option value="qualified">
+                        Qualified
+                    </option>
+
+                    <option value="documents-pending">
+                        Documents Pending
+                    </option>
+
+                    <option value="documents-received">
+                        Documents Received
+                    </option>
+
+                    <option value="processing">
+                        Processing
+                    </option>
+
+                    <option value="converted">
+                        Converted
+                    </option>
+
+                    <option value="closed">
+                        Closed
+                    </option>
+
+                    <option value="not-interested">
+                        Not Interested
+                    </option>
+
+                </select>
+
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CLIENT LEADS
+            ================================================== -->
+
+            <section class="lead-section">
+
+
+                <div class="section-title">
+
+
+                    <div>
+
+                        <span class="section-label">
+                            CLIENT ENQUIRIES
+                        </span>
+
+                        <h2>
+                            Client Leads
+                        </h2>
+
+                        <p>
+                            Review and manage enquiries submitted through the website.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="refreshButton"
+                        type="button"
+                        class="refresh-button"
+                    >
+                        ↻ Refresh
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- TABLE -->
+
+                <div class="table-wrapper">
+
+                    <table class="leads-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    CLIENT
+                                </th>
+
+                                <th>
+                                    CONTACT
+                                </th>
+
+                                <th>
+                                    PROGRAM
+                                </th>
+
+                                <th>
+                                    EXPERIENCE
+                                </th>
+
+                                <th>
+                                    SUBMITTED
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                                <th>
+                                    ACTION
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="leadsTableBody">
+
+                            <tr>
+
+                                <td
+                                    colspan="7"
+                                    class="loading-cell"
+                                >
+                                    Loading leads...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+
+
+            </section>
+
+
+        </main>
+
+    </div>
 
 
 
@@ -271,18 +522,96 @@
 
 
             <button
-                class="close-btn"
-                id="closeLeadBtn"
                 type="button"
+                class="close-btn"
+                id="closeModal"
                 aria-label="Close"
             >
                 ×
             </button>
 
 
-            <div
-                id="leadDetails"
-            ></div>
+            <div class="detail-head">
+
+                <span class="section-label">
+                    CLIENT DETAILS
+                </span>
+
+                <h2 id="modalClientName">
+                    Client
+                </h2>
+
+            </div>
+
+
+            <div id="leadDetails"></div>
+
+
+            <!-- STATUS UPDATE -->
+
+            <div class="edit-area">
+
+
+                <label for="modalStatus">
+                    Lead Status
+                </label>
+
+
+                <select id="modalStatus">
+
+                    <option value="new">
+                        New
+                    </option>
+
+                    <option value="contacted">
+                        Contacted
+                    </option>
+
+                    <option value="follow-up">
+                        Follow-up
+                    </option>
+
+                    <option value="qualified">
+                        Qualified
+                    </option>
+
+                    <option value="documents-pending">
+                        Documents Pending
+                    </option>
+
+                    <option value="documents-received">
+                        Documents Received
+                    </option>
+
+                    <option value="processing">
+                        Processing
+                    </option>
+
+                    <option value="converted">
+                        Converted
+                    </option>
+
+                    <option value="closed">
+                        Closed
+                    </option>
+
+                    <option value="not-interested">
+                        Not Interested
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="button"
+                    id="saveStatusButton"
+                    class="save"
+                >
+                    Save Status
+                </button>
+
+
+            </div>
 
 
         </div>
@@ -293,7 +622,7 @@
 
 
     <!-- =====================================================
-         FIREBASE / MANAGEMENT DASHBOARD JAVASCRIPT
+         JAVASCRIPT
     ====================================================== -->
 
     <script
